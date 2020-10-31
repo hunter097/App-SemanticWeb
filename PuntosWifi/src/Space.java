@@ -1,3 +1,4 @@
+
 import java.util.ArrayList;
 
 import org.apache.jena.ontology.OntModel;
@@ -9,7 +10,6 @@ import org.apache.jena.query.QuerySolution;
 import org.apache.jena.query.ResultSet;
 import org.apache.jena.rdf.model.ModelFactory;
 
-import ManejoDeDatos.Space;
 
 public class Space {
 	
@@ -28,6 +28,8 @@ public class Space {
 	private String hasType; //???
 	
 	private String hasLocation;
+	
+	private static final String inputFile = "output-with-links.nt";
 	
 	public Space() {
 		
@@ -150,7 +152,8 @@ public class Space {
 		this.hasLocation = hasLocation;
 	}
 	
-	public static void sparqltest()
+	
+	public void sparqltest()
 	{
 		Space space = new Space();
 		ArrayList<String> arr = new ArrayList<String>();
@@ -188,5 +191,4 @@ public class Space {
 			qexec.close();
 		  }
 	}
-
 }

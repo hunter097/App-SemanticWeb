@@ -27,8 +27,7 @@ public class Main {
         interfaz.setResizable(true);
         interfaz.setVisible(true);    
         
-        
-        
+        space.sparqltest();
 	}	
 
 }
