@@ -15,10 +15,18 @@ public class Location {
 	//private double coordinates, geographicalCoordinates;
 	private String coordinates, geographicalCoordinates;
 	private String address, addressName, addressType, typeNum, floor, orientation, latitude, longitude,
-						locality, province, neighborhood, district;
+						locality, province;
+	private static String neighborhood;
+	private String district;
 	//private int num, cp, xcoordinate, ycoordinate;
 	private String num, cp, xcoordinate, ycoordinate;
 	private ArrayList<String> info = new ArrayList<String>();
+	
+	// Creo una lista ArrayList para almacenar los distritos
+	private static ArrayList<String> districtList = new ArrayList<>();
+	private static ArrayList<String> neighborhoodList = new ArrayList<>();
+
+
 	
 	// Archivo de entrada para las pruebas
 	private static final String inputFile = "output-with-links.nt";
@@ -26,13 +34,14 @@ public class Location {
 	// Main con las pruebas
 	
 	public static void main(String [] args) {
-		sparqltest();
+		returnDistrictList();
+		returnNeighborhood();
 		
 	}
 	
-	// Metodo auxiliar para probar querys
-	private static void sparqltest() {
-OntModel model = ModelFactory.createOntologyModel();
+	// Metodo auxiliar que nos devuelve la lista de los distritos
+	private static ArrayList<String> returnDistrictList () {
+		OntModel model = ModelFactory.createOntologyModel();
 		
 		model.read(inputFile,null,"N-TRIPLES");
 		
@@ -41,9 +50,9 @@ OntModel model = ModelFactory.createOntologyModel();
 		String queryInstruction = "PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>\n"
 				+ "PREFIX owl: <http://www.w3.org/2002/07/owl#>\n"
 				+ "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>"
-				+ "SELECT DISTINCT ?name\n"
+				+ "SELECT DISTINCT ?name \n"
 				+ "    WHERE {\n"
-				+ "        { ?pred <https://freewifizones/madrid/location#" + loc.get_neighborhood_() +"> ?name. \n"
+				+ "        { ?pred <https://freewifizones/madrid/location#" + loc.get_district_() +"> ?name \n"
 				+ "}"
 				+ "}";
 		
@@ -54,12 +63,47 @@ OntModel model = ModelFactory.createOntologyModel();
 			ResultSet results = qexec.execSelect();
 			while(results.hasNext()) {
 				QuerySolution sol = results.nextSolution();
-				System.out.println(sol);
+				districtList.add(sol.toString().substring(9,sol.toString().length()-2));
 			}
+			System.out.println(districtList);
 		} finally {
 			qexec.close();
 		}
+		return districtList;
 	}
+	
+	// Metodo auxiliar que nos devuelve la lista de los barrios
+		private static ArrayList<String> returnNeighborhood () {
+			OntModel model = ModelFactory.createOntologyModel();
+			
+			model.read(inputFile,null,"N-TRIPLES");
+			
+			Location loc = new Location();
+			
+			String queryInstruction = "PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>\n"
+					+ "PREFIX owl: <http://www.w3.org/2002/07/owl#>\n"
+					+ "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>"
+					+ "SELECT DISTINCT ?name \n"
+					+ "    WHERE {\n"
+					+ "        { ?pred <https://freewifizones/madrid/location#" + loc.get_neighborhood_() +"> ?name \n"
+					+ "}"
+					+ "}";
+			
+			Query query = QueryFactory.create(queryInstruction);
+			QueryExecution qexec = QueryExecutionFactory.create(query,model);
+			
+			try {
+				ResultSet results = qexec.execSelect();
+				while(results.hasNext()) {
+					QuerySolution sol = results.nextSolution();
+					neighborhoodList.add(sol.toString().substring(9,sol.toString().length()-2));
+				}
+				System.out.println(neighborhoodList);
+			} finally {
+				qexec.close();
+			}
+			return neighborhoodList;
+		}
 	
 	public ArrayList<String> getLocationAtributes(){
 		info.add(this.coordinates+"");
