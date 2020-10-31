@@ -105,7 +105,7 @@ public class Location {
 			return neighborhoodList;
 		}
 	
-	public ArrayList<String> getLocationAtributes(){
+	/*public ArrayList<String> getLocationAtributes(){
 		info.add(this.coordinates+"");
 		info.add(this.address);
 		info.add(this.addressName);
@@ -126,7 +126,7 @@ public class Location {
 		info.add(this.geographicalCoordinates+"");
 		
 		return info;
-	}
+	}*/
 	
 	public void deteleLocationAtributes() {
 		info.clear();
