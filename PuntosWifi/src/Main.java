@@ -4,7 +4,7 @@ import org.apache.jena.rdf.model.ModelFactory;
 
 public class Main {
 	// Variable which charges our rdf file
-	private static final String inputFile = "/Users/usuario/eclipse-workspace/PuntosWifi/src/handsOn.rdf";
+	//private static final String inputFile = "/Users/usuario/eclipse-workspace/PuntosWifi/src/handsOn.rdf";
 	
 	public static void main(String[]args) {
 		// *We create an Ontology model
@@ -27,7 +27,9 @@ public class Main {
         interfaz.setResizable(true);
         interfaz.setVisible(true);    
         
-        space.sparqltest();
+        space.getListSpace("hasName");
+        space.getListSpacesNeighboord("Aluche");
+        space.getListAttSpace("Biblioteca Pública Municipal - Aluche");
 	}	
 
 }

@@ -63,7 +63,7 @@ public class Location {
 			ResultSet results = qexec.execSelect();
 			while(results.hasNext()) {
 				QuerySolution sol = results.nextSolution();
-				districtList.add(sol.toString().substring(9,sol.toString().length()-2));
+				districtList.add(sol.toString().substring(10,sol.toString().length()-2));  //chicos sería 10 porque sino dejamos un espacio en blanco justo al principio de cada nombre
 			}
 			System.out.println(districtList);
 		} finally {

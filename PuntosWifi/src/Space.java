@@ -153,14 +153,14 @@ public class Space {
 	}
 	
 	
-	public void sparqltest()
-	{
+	public ArrayList<String> getListSpace(String nombre){
+		
 		Space space = new Space();
-		ArrayList<String> arr = new ArrayList<String>();
+		ArrayList<String> array_nombres = new ArrayList<String>();
 		
-		space.setHasName("hasName");
+		//space.setHasName("hasName");
 		
-		System.out.println(space.getHasName() + "\n");
+		//System.out.println(space.getHasName() + "\n");
 
 	    OntModel model = ModelFactory.createOntologyModel();
 	    
@@ -171,7 +171,7 @@ public class Space {
 					+ "PREFIX owl: <http://www.w3.org/2002/07/owl#> \n"
 					+ "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> \n"
 					+ "SELECT DISTINCT ?name WHERE { \n"
-					+ "        { ?pred <https://freewifizones/madrid/space#" + space.getHasName() + "> ?name. \n"		
+					+ "        { ?pred <https://freewifizones/madrid/space#" + nombre + "> ?name. \n"		
 					+ "}"
 					+ "}";
 		Query query= QueryFactory.create(queryString);
@@ -181,14 +181,113 @@ public class Space {
 		    ResultSet results = qexec.execSelect();
 		    while ( results.hasNext()){
 		        QuerySolution soln = results.nextSolution();
-		        arr.add(soln.toString());
+		        array_nombres.add(soln.toString().substring(10,soln.toString().length()-2));
+		        //System.out.println(soln);
+		    }
+		    
+		} finally {
+			space.setName(array_nombres);
+			//System.out.println("\n ++++++++++ \n" + array_nombres.toString());
+			qexec.close();
+		  }
+		
+		return array_nombres;
+	}
+	
+	
+	public ArrayList<String> getListSpacesNeighboord(String nombre){
+		
+		//Space space = new Space();
+		//Location location = new Location();
+		ArrayList<String> array_nombres = new ArrayList<String>();
+		
+		//location.set_neighborhood_("La Elipa");
+		//space.setHasName("hasName");
+		
+		//System.out.println(space.getHasName() + "\n");
+		//System.out.println(location.get_neighborhood_() + "\n");
+
+	    OntModel model = ModelFactory.createOntologyModel();
+	    
+	    model.read(inputFile,null,"N-TRIPLES");
+
+	    String queryString=
+			"PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> \n"
+					+ "PREFIX owl: <http://www.w3.org/2002/07/owl#> \n"
+					+ "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> \n"
+					+ "SELECT DISTINCT ?name WHERE { \n"
+					+          "{ ?obj <https://freewifizones/madrid/location#neighborhood>" + "\"" + nombre + "\""  +". \n"
+					+ "           ?pred <https://freewifizones/madrid/space#hasLocation> ?obj. \n"
+					+ "           ?pred <https://freewifizones/madrid/space#hasName> ?name. \n"
+					+ "}"
+					//+ " ORDER BY ?name. \n"
+					+ "}";
+		Query query= QueryFactory.create(queryString);
+		QueryExecution qexec=QueryExecutionFactory.create(query, model);
+		
+		try {
+		    ResultSet results = qexec.execSelect();
+		    while ( results.hasNext()){
+		        QuerySolution soln = results.nextSolution();
+		        array_nombres.add(soln.toString().substring(10,soln.toString().length()-2));
+		        //System.out.println(soln);
+		    }
+		    
+		} finally {
+			//space.setName(array_nombres);
+			//System.out.println("\n ++++++++++ \n" + array_nombres.toString());
+			qexec.close();
+		  }
+		
+		return array_nombres;
+	}
+	
+	
+	public ArrayList<String> getListAttSpace(String nombre){
+		
+		//Space space = new Space();
+		//Location location = new Location();
+		ArrayList<String> array_nombres = new ArrayList<String>();
+		
+		//location.set_neighborhood_("La Elipa");
+		//space.setHasName("hasName");
+		
+		//System.out.println(space.getHasName() + "\n");
+		//System.out.println(location.get_neighborhood_() + "\n");
+
+	    OntModel model = ModelFactory.createOntologyModel();
+	    
+	    model.read(inputFile,null,"N-TRIPLES");
+
+	    String queryString=
+			"PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> \n"
+					+ "PREFIX owl: <http://www.w3.org/2002/07/owl#> \n"
+					+ "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> \n"
+					+ "SELECT DISTINCT ?pred ?name WHERE { \n"
+					+          "{ ?obj <https://freewifizones/madrid/space#hasName>" + "\"" + nombre + "\""  +". \n"
+					+ "           ?obj ?pred ?name. \n"
+					+ "           FILTER(?pred != owl:sameAs). \n"
+					+ "           FILTER(?pred != rdf:type). \n"
+					+ "}"
+					+ "}";
+		Query query= QueryFactory.create(queryString);
+		QueryExecution qexec=QueryExecutionFactory.create(query, model);
+		
+		try {
+		    ResultSet results = qexec.execSelect();
+		    while ( results.hasNext()){
+		        QuerySolution soln = results.nextSolution();
+		        array_nombres.add(soln.toString().substring(10,soln.toString().length()-2));
 		        System.out.println(soln);
 		    }
 		    
 		} finally {
-			space.setName(arr);
-			System.out.println("\n ++++++++++ \n" + arr.toString());
+			//space.setName(array_nombres);
+			System.out.println("\n ++++++++++ \n" + array_nombres.toString());
 			qexec.close();
 		  }
+		
+		return array_nombres;
+	
 	}
 }
