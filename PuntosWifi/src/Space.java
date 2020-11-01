@@ -20,8 +20,8 @@ public class Space {
 	private String hasDescriptionEntity;
 	private String hasDescription;
 	private String hasRoute;
-	private int hasTelephone;
-	private int hasAccesibility;
+	private String hasTelephone;
+	private String hasAccesibility;
 	private String hasURL;
 	private String hasEmail;
 	private String hasContact;
@@ -70,11 +70,11 @@ public class Space {
 		return this.hasRoute;
 	}
 	
-	public int getHasTelephone() {
+	public String getHasTelephone() {
 		return this.hasTelephone;
 	}
 	
-	public int getHasAccesibility() {
+	public String getHasAccesibility() {
 		return this.hasAccesibility;
 	}
 	
@@ -124,11 +124,11 @@ public class Space {
 		this.hasRoute = hasRoute;
 	}
 	
-	public void setHasTelephone(int hasTelephone) {
+	public void setHasTelephone(String hasTelephone) {
 		this.hasTelephone = hasTelephone;
 	}
 	
-	public void setHasAccesibility(int hasAccesibility) {
+	public void setHasAccesibility(String hasAccesibility) {
 		this.hasAccesibility = hasAccesibility;
 	}
 	
@@ -136,7 +136,7 @@ public class Space {
 		this.hasURL = hasURL;
 	}
 	
-	public void setHasEmailL(String hasEmail) {
+	public void setHasEmail(String hasEmail) {
 		this.hasEmail = hasEmail;
 	}
 	
@@ -245,8 +245,12 @@ public class Space {
 	
 	public ArrayList<String> getListAttSpace(String nombre){
 		
-		//Space space = new Space();
-		//Location location = new Location();
+		Space space = new Space();
+		Location location = new Location();
+		Query query;
+		QueryExecution qexec; 
+	    ResultSet results;
+        QuerySolution soln;
 		ArrayList<String> array_nombres = new ArrayList<String>();
 		
 		//location.set_neighborhood_("La Elipa");
@@ -256,37 +260,305 @@ public class Space {
 		//System.out.println(location.get_neighborhood_() + "\n");
 
 	    OntModel model = ModelFactory.createOntologyModel();
-	    
 	    model.read(inputFile,null,"N-TRIPLES");
 
-	    String queryString=
+	    String query_hasSchedule=
 			"PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> \n"
 					+ "PREFIX owl: <http://www.w3.org/2002/07/owl#> \n"
 					+ "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> \n"
 					+ "SELECT DISTINCT ?pred ?name WHERE { \n"
 					+          "{ ?obj <https://freewifizones/madrid/space#hasName>" + "\"" + nombre + "\""  +". \n"
-					+ "           ?obj ?pred ?name. \n"
-					+ "           FILTER(?pred != owl:sameAs). \n"
-					+ "           FILTER(?pred != rdf:type). \n"
+					+ "           ?obj <https://freewifizones/madrid/space#hasSchedule> ?name. \n"
 					+ "}"
 					+ "}";
-		Query query= QueryFactory.create(queryString);
-		QueryExecution qexec=QueryExecutionFactory.create(query, model);
+	    
+		query =	QueryFactory.create(query_hasSchedule);
+		qexec = QueryExecutionFactory.create(query, model);
 		
 		try {
-		    ResultSet results = qexec.execSelect();
+		    results = qexec.execSelect();
 		    while ( results.hasNext()){
-		        QuerySolution soln = results.nextSolution();
-		        array_nombres.add(soln.toString().substring(10,soln.toString().length()-2));
-		        System.out.println(soln);
+		        soln = results.nextSolution();
+		       // array_nombres.add(soln.toString().substring(10,soln.toString().length()-2));
+		        space.setHasSchedule(soln.toString().substring(10,soln.toString().length()-2));
+		        //System.out.println(soln);
 		    }
 		    
 		} finally {
-			//space.setName(array_nombres);
-			System.out.println("\n ++++++++++ \n" + array_nombres.toString());
+			System.out.println("\n ++++++++++ \n" + space.getHasSchedule());
+			qexec.close();
+		  }
+	    
+	    String query_hasEquipment = 
+	    		"PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> \n"
+						+ "PREFIX owl: <http://www.w3.org/2002/07/owl#> \n"
+						+ "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> \n"
+						+ "SELECT DISTINCT ?pred ?name WHERE { \n"
+						+          "{ ?obj <https://freewifizones/madrid/space#hasName>" + "\"" + nombre + "\""  +". \n"
+						+ "           ?obj <https://freewifizones/madrid/space#hasEquipment> ?name. \n"
+						+ "}"
+						+ "}";
+	    
+		query =	QueryFactory.create(query_hasEquipment);
+		qexec = QueryExecutionFactory.create(query, model);
+		
+		try {
+		    results = qexec.execSelect();
+		    while ( results.hasNext()){
+		        soln = results.nextSolution();
+		       // array_nombres.add(soln.toString().substring(10,soln.toString().length()-2));
+		        space.setHasEquipment(soln.toString().substring(10,soln.toString().length()-2));
+		        //System.out.println(soln);
+		    }
+		    
+		} finally {
+			System.out.println("\n ++++++++++ \n" + space.getHasEquipment());
+			qexec.close();
+		  }
+		    
+	    String query_hasDescriptionEntity = 
+	    		"PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> \n"
+						+ "PREFIX owl: <http://www.w3.org/2002/07/owl#> \n"
+						+ "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> \n"
+						+ "SELECT DISTINCT ?pred ?name WHERE { \n"
+						+          "{ ?obj <https://freewifizones/madrid/space#hasName>" + "\"" + nombre + "\""  +". \n"
+						+ "           ?obj <https://freewifizones/madrid/space#hasDescriptionEntity> ?name. \n"
+						+ "}"
+						+ "}";
+	    
+		query =	QueryFactory.create(query_hasDescriptionEntity);
+		qexec = QueryExecutionFactory.create(query, model);
+		
+		try {
+		    results = qexec.execSelect();
+		    while ( results.hasNext()){
+		        soln = results.nextSolution();
+		       // array_nombres.add(soln.toString().substring(10,soln.toString().length()-2));
+		        space.setHasDescriptionEntity(soln.toString().substring(10,soln.toString().length()-2));
+		        //System.out.println(soln);
+		    }
+		    
+		} finally {
+			System.out.println("\n ++++++++++ \n" + space.getHasDescriptionEntity());
+			qexec.close();
+		  }
+	    
+	    String query_hasDescription = 
+	    		"PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> \n"
+						+ "PREFIX owl: <http://www.w3.org/2002/07/owl#> \n"
+						+ "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> \n"
+						+ "SELECT DISTINCT ?pred ?name WHERE { \n"
+						+          "{ ?obj <https://freewifizones/madrid/space#hasName>" + "\"" + nombre + "\""  +". \n"
+						+ "           ?obj <https://freewifizones/madrid/space#hasDescription> ?name. \n"
+						+ "}"
+						+ "}";
+	    
+		query =	QueryFactory.create(query_hasDescription);
+		qexec = QueryExecutionFactory.create(query, model);
+		
+		try {
+		    results = qexec.execSelect();
+		    while ( results.hasNext()){
+		        soln = results.nextSolution();
+		       // array_nombres.add(soln.toString().substring(10,soln.toString().length()-2));
+		        space.setHasDescription(soln.toString().substring(10,soln.toString().length()-2));
+		        //System.out.println(soln);
+		    }
+		    
+		} finally {
+			System.out.println("\n ++++++++++ \n" + space.getHasDescription());
+			qexec.close();
+		  }
+	    
+	    String query_hasRoute = 
+	    		"PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> \n"
+						+ "PREFIX owl: <http://www.w3.org/2002/07/owl#> \n"
+						+ "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> \n"
+						+ "SELECT DISTINCT ?pred ?name WHERE { \n"
+						+          "{ ?obj <https://freewifizones/madrid/space#hasName>" + "\"" + nombre + "\""  +". \n"
+						+ "           ?obj <https://freewifizones/madrid/space#hasRoute> ?name. \n"
+						+ "}"
+						+ "}";
+	    
+		query =	QueryFactory.create(query_hasRoute);
+		qexec = QueryExecutionFactory.create(query, model);
+		
+		try {
+		    results = qexec.execSelect();
+		    while ( results.hasNext()){
+		        soln = results.nextSolution();
+		       // array_nombres.add(soln.toString().substring(10,soln.toString().length()-2));
+		        space.setHasRoute(soln.toString().substring(10,soln.toString().length()-2));
+		        //System.out.println(soln);
+		    }
+		    
+		} finally {
+			System.out.println("\n ++++++++++ \n" + space.getHasRoute());
+			qexec.close();
+		  }
+	 
+	    String query_hasTelephone = 
+	    		"PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> \n"
+						+ "PREFIX owl: <http://www.w3.org/2002/07/owl#> \n"
+						+ "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> \n"
+						+ "SELECT DISTINCT ?pred ?name WHERE { \n"
+						+          "{ ?obj <https://freewifizones/madrid/space#hasName>" + "\"" + nombre + "\""  +". \n"
+						+ "           ?obj <https://freewifizones/madrid/space#hasTelephone> ?name. \n"
+						+ "}"
+						+ "}";
+	    
+		query =	QueryFactory.create(query_hasTelephone );
+		qexec = QueryExecutionFactory.create(query, model);
+		
+		try {
+		    results = qexec.execSelect();
+		    while ( results.hasNext()){
+		        soln = results.nextSolution();
+		       // array_nombres.add(soln.toString().substring(10,soln.toString().length()-2));
+		        space.setHasTelephone(soln.toString().substring(10,soln.toString().length()-2));
+		        //System.out.println(soln);
+		    }
+		    
+		} finally {
+			System.out.println("\n ++++++++++ \n" + space.getHasTelephone());
+			qexec.close();
+		  }
+	    
+	    String query_hasAccesibility = 
+	    		"PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> \n"
+						+ "PREFIX owl: <http://www.w3.org/2002/07/owl#> \n"
+						+ "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> \n"
+						+ "SELECT DISTINCT ?pred ?name WHERE { \n"
+						+          "{ ?obj <https://freewifizones/madrid/space#hasName>" + "\"" + nombre + "\""  +". \n"
+						+ "           ?obj <https://freewifizones/madrid/space#hasAccesibility> ?name. \n"
+						+ "}"
+						+ "}";
+	    
+		query =	QueryFactory.create(query_hasAccesibility);
+		qexec = QueryExecutionFactory.create(query, model);
+		
+		try {
+		    results = qexec.execSelect();
+		    while ( results.hasNext()){
+		        soln = results.nextSolution();
+		       // array_nombres.add(soln.toString().substring(10,soln.toString().length()-2));
+		        space.setHasAccesibility(soln.toString().substring(10,soln.toString().length()-2));
+		        //System.out.println(soln);
+		    }
+		    
+		} finally {
+			System.out.println("\n ++++++++++ \n" + space.getHasAccesibility());
+			qexec.close();
+		  }
+
+	    String query_hasUrl = 
+	    		"PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> \n"
+						+ "PREFIX owl: <http://www.w3.org/2002/07/owl#> \n"
+						+ "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> \n"
+						+ "SELECT DISTINCT ?pred ?name WHERE { \n"
+						+          "{ ?obj <https://freewifizones/madrid/space#hasName>" + "\"" + nombre + "\""  +". \n"
+						+ "           ?obj <https://freewifizones/madrid/space#hasUrl> ?name. \n"
+						+ "}"
+						+ "}";
+
+		query =	QueryFactory.create(query_hasUrl);
+		qexec = QueryExecutionFactory.create(query, model);
+		
+		try {
+		    results = qexec.execSelect();
+		    while ( results.hasNext()){
+		        soln = results.nextSolution();
+		       // array_nombres.add(soln.toString().substring(10,soln.toString().length()-2));
+		        space.setHasURL(soln.toString().substring(11,soln.toString().length()-3));
+		        //System.out.println(soln);
+		    }
+		    
+		} finally {
+			System.out.println("\n ++++++++++ \n" + space.getHasURL());
 			qexec.close();
 		  }
 		
+	    String query_hasEmail = 
+	    		"PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> \n"
+						+ "PREFIX owl: <http://www.w3.org/2002/07/owl#> \n"
+						+ "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> \n"
+						+ "SELECT DISTINCT ?pred ?name WHERE { \n"
+						+          "{ ?obj <https://freewifizones/madrid/space#hasName>" + "\"" + nombre + "\""  +". \n"
+						+ "           ?obj <https://freewifizones/madrid/space#hasEmail> ?name. \n"
+						+ "}"
+						+ "}";
+	    
+		query =	QueryFactory.create(query_hasEmail);
+		qexec = QueryExecutionFactory.create(query, model);
+		
+		try {
+		    results = qexec.execSelect();
+		    while ( results.hasNext()){
+		        soln = results.nextSolution();
+		       // array_nombres.add(soln.toString().substring(10,soln.toString().length()-2));
+		        space.setHasEmail(soln.toString().substring(10,soln.toString().length()-2));
+		        //System.out.println(soln);
+		    }
+		    
+		} finally {
+			System.out.println("\n ++++++++++ \n" + space.getHasEmail());
+			qexec.close();
+		  }
+
+	    String query_hasContact = 
+	    		"PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> \n"
+						+ "PREFIX owl: <http://www.w3.org/2002/07/owl#> \n"
+						+ "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> \n"
+						+ "SELECT DISTINCT ?pred ?name WHERE { \n"
+						+          "{ ?obj <https://freewifizones/madrid/space#hasName>" + "\"" + nombre + "\""  +". \n"
+						+ "           ?obj <https://freewifizones/madrid/space#hasContact> ?name. \n"
+						+ "}"
+						+ "}";
+	    
+		query =	QueryFactory.create(query_hasContact);
+		qexec = QueryExecutionFactory.create(query, model);
+		
+		try {
+		    results = qexec.execSelect();
+		    while ( results.hasNext()){
+		        soln = results.nextSolution();
+		       // array_nombres.add(soln.toString().substring(10,soln.toString().length()-2));
+		        space.setHasContact(soln.toString().substring(10,soln.toString().length()-2));
+		        //System.out.println(soln);
+		    }
+		    
+		} finally {
+			System.out.println("\n ++++++++++ \n" + space.getHasContact());
+			qexec.close();
+		  }
+
+	    String query_hasLocation = 
+	    		"PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> \n"
+						+ "PREFIX owl: <http://www.w3.org/2002/07/owl#> \n"
+						+ "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> \n"
+						+ "SELECT DISTINCT ?pred ?name WHERE { \n"
+						+          "{ ?obj <https://freewifizones/madrid/space#hasName>" + "\"" + nombre + "\""  +". \n"
+						+ "           ?obj <https://freewifizones/madrid/space#hasLocation> ?name. \n"
+						+ "}"
+						+ "}";
+	    
+		query =	QueryFactory.create(query_hasLocation);
+		qexec = QueryExecutionFactory.create(query, model);
+		
+		try {
+		    results = qexec.execSelect();
+		    while ( results.hasNext()){
+		        soln = results.nextSolution();
+		       // array_nombres.add(soln.toString().substring(10,soln.toString().length()-2));
+		        space.setHasLocation(soln.toString().substring(10,soln.toString().length()-2));
+		        //System.out.println(soln);
+		    }
+		    
+		} finally {
+			System.out.println("\n ++++++++++ \n" + space.getHasLocation());
+			qexec.close();
+		  }
+
 		return array_nombres;
 	
 	}
