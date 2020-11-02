@@ -26,11 +26,11 @@ public class Location {
 	public static void main(String [] args) {
 		
 		//getListDistrict("madrid");
-		//getListNeighborhood("Carabanchel");
+		//getListNeighborhood("Latina");
 		//getListAttLocation("<https://freewifizones/madrid/location/435820-4471982>");
 	}
 	
-	private static ArrayList<String> getListDistrict(String name) {
+	public static ArrayList<String> getListDistrict(String name) {
 		
 		ArrayList<String> districtList = new ArrayList<String>();
 		
@@ -66,7 +66,7 @@ public class Location {
 		return districtList;
 	}
 	
-	private static ArrayList<String> getListNeighborhood (String name) {
+	public static ArrayList<String> getListNeighborhood (String name) {
 			
 			ArrayList<String> neighborhoodList = new ArrayList<String>();
 			
@@ -94,7 +94,7 @@ public class Location {
 				ResultSet results = qexec.execSelect();
 				while(results.hasNext()) {
 					QuerySolution sol = results.nextSolution();
-					neighborhoodList.add(sol.toString().substring(9,sol.toString().length()-2));
+					neighborhoodList.add(sol.toString().substring(10,sol.toString().length()-2));
 				}
 				System.out.println(neighborhoodList);
 			} finally {
@@ -103,49 +103,8 @@ public class Location {
 			return neighborhoodList;
 		}
 		
-		/*-Encontrar las coordenadas (identificador Lugar) de una Biblioteca  (Clase Location)
-		[getCoordinates(String name)
-		Devuelve :String*/
 	
-	private static String getCoordinates(String name) {
-		
-		Location loc = new Location();
-		
-		String coordenadasRes = "";
-		
-		OntModel model = ModelFactory.createOntologyModel();
-		
-		model.read(inputFile,null,"N-TRIPLES");
-		
-		String queryInstruction = "PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>\n"
-				+ "PREFIX owl: <http://www.w3.org/2002/07/owl#>\n"
-				+ "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>"
-				+ "SELECT DISTINCT ?name \n"
-				+ "    WHERE {\n"
-				+ "        { ?obj <https://freewifizones/madrid/location#district>" + "\"" + name + "\"" + ". \n"
-				+ "        { ?obj <https://freewifizones/madrid/location#" + loc.get_neighborhood_() + ">"+ "?name" + ".\n"
-				+ "}"
-				+ "}"
-				+ "}";
-		
-		Query query = QueryFactory.create(queryInstruction);
-		QueryExecution qexec = QueryExecutionFactory.create(query,model);
-		
-		try {
-			ResultSet results = qexec.execSelect();
-			while(results.hasNext()) {
-				QuerySolution sol = results.nextSolution();
-				coordenadasRes = sol.toString().substring(9,sol.toString().length()-2);
-			}
-			System.out.println(coordenadasRes);
-		} finally {
-			qexec.close();
-		}
-		return coordenadasRes;
-		
-	}
-	
-	private static ArrayList<String> getListAttLocation(String name){
+	public static ArrayList<String> getListAttLocation(String name){
 		
 		ArrayList<String> attList = new ArrayList<String>();
 		
