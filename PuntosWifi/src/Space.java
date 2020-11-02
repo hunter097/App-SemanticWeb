@@ -182,12 +182,12 @@ public class Space {
 		    while ( results.hasNext()){
 		        QuerySolution soln = results.nextSolution();
 		        array_nombres.add(soln.toString().substring(10,soln.toString().length()-2));
-		        //System.out.println(soln);
+		        System.out.println(soln);
 		    }
 		    
 		} finally {
 			space.setName(array_nombres);
-			//System.out.println("\n ++++++++++ \n" + array_nombres.toString());
+			System.out.println("\n ++++++++++ \n" + array_nombres.toString());
 			qexec.close();
 		  }
 		
