@@ -75,6 +75,8 @@ public class Location {
 			OntModel model = ModelFactory.createOntologyModel();
 			
 			model.read(inputFile,null,"N-TRIPLES");
+			
+			System.out.println(loc.get_neighborhood_());
 						
 			String queryInstruction = "PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>\n"
 					+ "PREFIX owl: <http://www.w3.org/2002/07/owl#>\n"
@@ -82,7 +84,7 @@ public class Location {
 					+ "SELECT DISTINCT ?name \n"
 					+ "    WHERE {\n"
 					+ "        { ?obj <https://freewifizones/madrid/location#district>" + "\"" + name + "\"" + ". \n"
-					+ "        { ?obj <https://freewifizones/madrid/location#" + loc.get_neighborhood_() + ">"+ "?name" + ".\n"
+					+ "        { ?obj <https://freewifizones/madrid/location#neighborhood> ?name .\n"
 					+ "}"
 					+ "}"
 					+ "}";
