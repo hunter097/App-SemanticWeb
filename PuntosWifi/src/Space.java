@@ -154,7 +154,6 @@ public class Space {
 	
 	
 	public ArrayList<String> getListSpace(String nombre){
-		
 		Space space = new Space();
 		ArrayList<String> array_nombres = new ArrayList<String>();
 		

@@ -15,21 +15,20 @@ public class Main {
 		
 		
 		
-		Interface interfaz = new Interface();
-		
-		Edificios listaEdificios = new Edificios();
- 
-		Lugares listaDistritos = new Lugares();
+		Interface interfaz = new Interface("Puntos de Wifi PÃºblicos",950,650);
+		 
 		Space space = new Space();
 		
+		Location location = new Location();
 		
-		interfaz.init(listaEdificios.getLista1(),listaDistritos.getLista2());
+		
+		interfaz.init(space.getListSpace("hasName"),location.getListDistrict("madrid"));
         interfaz.setResizable(true);
         interfaz.setVisible(true);    
         
         space.getListSpace("hasName");
         space.getListSpacesNeighboord("Aluche");
-        space.getListAttSpace("Biblioteca Pública Municipal - Aluche");
+        space.getListAttSpace("Biblioteca Pï¿½blica Municipal - Aluche");
 	}	
 
 }
