@@ -1,4 +1,3 @@
-
 import java.util.ArrayList;
 
 import org.apache.jena.ontology.OntModel;
@@ -154,12 +153,9 @@ public class Space {
 	
 	
 	public ArrayList<String> getListSpace(String nombre){
+		
 		Space space = new Space();
 		ArrayList<String> array_nombres = new ArrayList<String>();
-		
-		//space.setHasName("hasName");
-		
-		//System.out.println(space.getHasName() + "\n");
 
 	    OntModel model = ModelFactory.createOntologyModel();
 	    
@@ -180,13 +176,13 @@ public class Space {
 		    ResultSet results = qexec.execSelect();
 		    while ( results.hasNext()){
 		        QuerySolution soln = results.nextSolution();
-		        array_nombres.add(soln.toString().substring(10,soln.toString().length()-2));
-		        System.out.println(soln);
+		        array_nombres.add(soln.toString().substring(11,soln.toString().length()-3));
+		        //System.out.println(soln);
 		    }
 		    
 		} finally {
 			space.setName(array_nombres);
-			System.out.println("\n ++++++++++ \n" + array_nombres.toString());
+			//System.out.println("\n ++++++++++ \n" + array_nombres.toString());
 			qexec.close();
 		  }
 		
@@ -195,17 +191,7 @@ public class Space {
 	
 	
 	public ArrayList<String> getListSpacesNeighboord(String nombre){
-		
-		//Space space = new Space();
-		//Location location = new Location();
 		ArrayList<String> array_nombres = new ArrayList<String>();
-		
-		//location.set_neighborhood_("La Elipa");
-		//space.setHasName("hasName");
-		
-		//System.out.println(space.getHasName() + "\n");
-		//System.out.println(location.get_neighborhood_() + "\n");
-
 	    OntModel model = ModelFactory.createOntologyModel();
 	    
 	    model.read(inputFile,null,"N-TRIPLES");
@@ -228,7 +214,7 @@ public class Space {
 		    ResultSet results = qexec.execSelect();
 		    while ( results.hasNext()){
 		        QuerySolution soln = results.nextSolution();
-		        array_nombres.add(soln.toString().substring(10,soln.toString().length()-2));
+		        array_nombres.add(soln.toString().substring(11,soln.toString().length()-3));
 		        //System.out.println(soln);
 		    }
 		    
@@ -242,21 +228,14 @@ public class Space {
 	}
 	
 	
-	public ArrayList<String> getListAttSpace(String nombre){
+	public void getListAttSpace(String nombre){
 		
 		Space space = new Space();
-		Location location = new Location();
 		Query query;
 		QueryExecution qexec; 
 	    ResultSet results;
         QuerySolution soln;
-		ArrayList<String> array_nombres = new ArrayList<String>();
 		
-		//location.set_neighborhood_("La Elipa");
-		//space.setHasName("hasName");
-		
-		//System.out.println(space.getHasName() + "\n");
-		//System.out.println(location.get_neighborhood_() + "\n");
 
 	    OntModel model = ModelFactory.createOntologyModel();
 	    model.read(inputFile,null,"N-TRIPLES");
@@ -279,12 +258,12 @@ public class Space {
 		    while ( results.hasNext()){
 		        soln = results.nextSolution();
 		       // array_nombres.add(soln.toString().substring(10,soln.toString().length()-2));
-		        space.setHasSchedule(soln.toString().substring(10,soln.toString().length()-2));
+		        space.setHasSchedule(soln.toString().substring(11,soln.toString().length()-3));
 		        //System.out.println(soln);
 		    }
 		    
 		} finally {
-			System.out.println("\n ++++++++++ \n" + space.getHasSchedule());
+			//System.out.println("\n ++++++++++ \n" + space.getHasSchedule());
 			qexec.close();
 		  }
 	    
@@ -306,12 +285,12 @@ public class Space {
 		    while ( results.hasNext()){
 		        soln = results.nextSolution();
 		       // array_nombres.add(soln.toString().substring(10,soln.toString().length()-2));
-		        space.setHasEquipment(soln.toString().substring(10,soln.toString().length()-2));
+		        space.setHasEquipment(soln.toString().substring(11,soln.toString().length()-3));
 		        //System.out.println(soln);
 		    }
 		    
 		} finally {
-			System.out.println("\n ++++++++++ \n" + space.getHasEquipment());
+			//System.out.println("\n ++++++++++ \n" + space.getHasEquipment());
 			qexec.close();
 		  }
 		    
@@ -333,12 +312,12 @@ public class Space {
 		    while ( results.hasNext()){
 		        soln = results.nextSolution();
 		       // array_nombres.add(soln.toString().substring(10,soln.toString().length()-2));
-		        space.setHasDescriptionEntity(soln.toString().substring(10,soln.toString().length()-2));
+		        space.setHasDescriptionEntity(soln.toString().substring(11,soln.toString().length()-3));
 		        //System.out.println(soln);
 		    }
 		    
 		} finally {
-			System.out.println("\n ++++++++++ \n" + space.getHasDescriptionEntity());
+			//System.out.println("\n ++++++++++ \n" + space.getHasDescriptionEntity());
 			qexec.close();
 		  }
 	    
@@ -360,12 +339,12 @@ public class Space {
 		    while ( results.hasNext()){
 		        soln = results.nextSolution();
 		       // array_nombres.add(soln.toString().substring(10,soln.toString().length()-2));
-		        space.setHasDescription(soln.toString().substring(10,soln.toString().length()-2));
+		        space.setHasDescription(soln.toString().substring(11,soln.toString().length()-3));
 		        //System.out.println(soln);
 		    }
 		    
 		} finally {
-			System.out.println("\n ++++++++++ \n" + space.getHasDescription());
+			//System.out.println("\n ++++++++++ \n" + space.getHasDescription());
 			qexec.close();
 		  }
 	    
@@ -387,12 +366,12 @@ public class Space {
 		    while ( results.hasNext()){
 		        soln = results.nextSolution();
 		       // array_nombres.add(soln.toString().substring(10,soln.toString().length()-2));
-		        space.setHasRoute(soln.toString().substring(10,soln.toString().length()-2));
+		        space.setHasRoute(soln.toString().substring(11,soln.toString().length()-3));
 		        //System.out.println(soln);
 		    }
 		    
 		} finally {
-			System.out.println("\n ++++++++++ \n" + space.getHasRoute());
+			//System.out.println("\n ++++++++++ \n" + space.getHasRoute());
 			qexec.close();
 		  }
 	 
@@ -414,12 +393,12 @@ public class Space {
 		    while ( results.hasNext()){
 		        soln = results.nextSolution();
 		       // array_nombres.add(soln.toString().substring(10,soln.toString().length()-2));
-		        space.setHasTelephone(soln.toString().substring(10,soln.toString().length()-2));
+		        space.setHasTelephone(soln.toString().substring(11,soln.toString().length()-3));
 		        //System.out.println(soln);
 		    }
 		    
 		} finally {
-			System.out.println("\n ++++++++++ \n" + space.getHasTelephone());
+			//System.out.println("\n ++++++++++ \n" + space.getHasTelephone());
 			qexec.close();
 		  }
 	    
@@ -441,12 +420,12 @@ public class Space {
 		    while ( results.hasNext()){
 		        soln = results.nextSolution();
 		       // array_nombres.add(soln.toString().substring(10,soln.toString().length()-2));
-		        space.setHasAccesibility(soln.toString().substring(10,soln.toString().length()-2));
+		        space.setHasAccesibility(soln.toString().substring(11,soln.toString().length()-3));
 		        //System.out.println(soln);
 		    }
 		    
 		} finally {
-			System.out.println("\n ++++++++++ \n" + space.getHasAccesibility());
+			//System.out.println("\n ++++++++++ \n" + space.getHasAccesibility());
 			qexec.close();
 		  }
 
@@ -473,7 +452,7 @@ public class Space {
 		    }
 		    
 		} finally {
-			System.out.println("\n ++++++++++ \n" + space.getHasURL());
+			//System.out.println("\n ++++++++++ \n" + space.getHasURL());
 			qexec.close();
 		  }
 		
@@ -495,12 +474,12 @@ public class Space {
 		    while ( results.hasNext()){
 		        soln = results.nextSolution();
 		       // array_nombres.add(soln.toString().substring(10,soln.toString().length()-2));
-		        space.setHasEmail(soln.toString().substring(10,soln.toString().length()-2));
+		        space.setHasEmail(soln.toString().substring(11,soln.toString().length()-3));
 		        //System.out.println(soln);
 		    }
 		    
 		} finally {
-			System.out.println("\n ++++++++++ \n" + space.getHasEmail());
+			//System.out.println("\n ++++++++++ \n" + space.getHasEmail());
 			qexec.close();
 		  }
 
@@ -522,12 +501,12 @@ public class Space {
 		    while ( results.hasNext()){
 		        soln = results.nextSolution();
 		       // array_nombres.add(soln.toString().substring(10,soln.toString().length()-2));
-		        space.setHasContact(soln.toString().substring(10,soln.toString().length()-2));
+		        space.setHasContact(soln.toString().substring(11,soln.toString().length()-3));
 		        //System.out.println(soln);
 		    }
 		    
 		} finally {
-			System.out.println("\n ++++++++++ \n" + space.getHasContact());
+			//System.out.println("\n ++++++++++ \n" + space.getHasContact());
 			qexec.close();
 		  }
 
@@ -549,16 +528,16 @@ public class Space {
 		    while ( results.hasNext()){
 		        soln = results.nextSolution();
 		       // array_nombres.add(soln.toString().substring(10,soln.toString().length()-2));
-		        space.setHasLocation(soln.toString().substring(10,soln.toString().length()-2));
-		        //System.out.println(soln);
+		        space.setHasLocation(soln.toString().substring(11,soln.toString().length()-3));
+		        //--------------------------------------------------------------------------
+		        
+		        //--------------------------------------------------------------------------
 		    }
 		    
 		} finally {
-			System.out.println("\n ++++++++++ \n" + space.getHasLocation());
+			//System.out.println("\n ++++++++++ \n" + space.getHasLocation());
 			qexec.close();
 		  }
-
-		return array_nombres;
 	
 	}
 }

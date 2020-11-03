@@ -15,6 +15,7 @@ public class Main {
 		
 		
 		
+	
 		Interface interfaz = new Interface("Puntos de Wifi Públicos",950,650);
 		 
 		Space space = new Space();
@@ -22,7 +23,7 @@ public class Main {
 		Location location = new Location();
 		
 		
-		interfaz.init(space.getListSpace("hasName"),location.getListDistrict("madrid"));
+		interfaz.init(space.getListSpace("hasName"),location.getListDistrict());
         interfaz.setResizable(true);
         interfaz.setVisible(true);    
         
